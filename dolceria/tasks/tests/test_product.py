@@ -3,6 +3,20 @@ from model_bakery import baker
 from dolceria.accounts.tests import fixtures
 
 
+def test_add_product_without_being_logged(client):
+    new_product = {
+        "product": {
+            "name": "Red Velvet",
+            "image_url": "https://url.py",
+            "description": "O Bolo Red Velvet é um bolo de textura muito leve e macia, levemente amanteigado e com um discreto sabor a chocolate. A sua massa é de cor vermelha, o que contrasta com o branco do creme queijo no recheio e cobertura-.",
+            "quantity": 30,
+            "price": 55.50,
+        }
+    }
+    response = client.post("/api/tasks/add/product", new_product)
+    assert response.status_code == 401
+
+
 def test_if_product_is_being_created(user, client, db):
     client.force_login(user)
 
@@ -11,8 +25,8 @@ def test_if_product_is_being_created(user, client, db):
         name="Red Velvet",
         image_url="https://url.py",
         description="O Bolo Red Velvet é um bolo de textura muito leve e macia, levemente amanteigado e com um discreto sabor a chocolate. A sua massa é de cor vermelha, o que contrasta com o branco do creme queijo no recheio e cobertura-.",
-        quantity="30",
-        price="55.50",
+        quantity=30,
+        price=55.50,
     )
     new_product = {
         "product": {
@@ -51,6 +65,6 @@ def test_list_all_products(user, client, db):
     )
     request = client.get("/api/tasks/list/products")
     response = request.json()
-    breakpoint()
 
     assert request.status_code == 200
+    assert len(response["products"]) == 4

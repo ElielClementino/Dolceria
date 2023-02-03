@@ -22,6 +22,5 @@ def add_product(product):
 
 
 def list_products():
-    products = Product.objects.all()
-    breakpoint()
+    products = Product.objects.values()
     return [product for product in products]
