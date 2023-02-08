@@ -1,44 +1,62 @@
 <template>
-  <v-footer :absolute="!fixed" app>
-    <v-container>
-      <v-row justify="center">
-        <v-col cols="12" lg="6" md="6" align-self="center" class="pa-0">
-          <div class="px-5 text-grey text-center">
-            <span v-if="user" class="pl-4">
-              <v-icon>mdi-account</v-icon>
-              {{ user.username }}
-            </span>
-            <span class="px-5">ENV: {{ nodeEnv }}</span>
-          </div>
-        </v-col>
-        <v-col cols="12" lg="6" md="6" align-self="center" class="pa-0">
-          <div class="px-5 text-grey text-center">
-            <span class="px-5">API: {{ apiBaseUrl }}</span>
-          </div>
-        </v-col>
-        <v-col cols="12" align-self="center" class="pa-0 text-center">
-          <span> &copy; {{ new Date().getFullYear() }} - Djàvue Template </span>
-        </v-col>
-      </v-row>
-    </v-container>
+  <v-footer :absolute="!fixed" app style="padding:0 !important">
+    <div class="bg-purple d-flex w-100 align-center px-4">
+      <strong class="strong">{{ year }} - Dolceria - Eliel</strong>
+
+      <v-spacer/>
+      <a 
+      v-for="link, idx in links"
+      :key="idx"
+      :href="link"
+      target="_blank"
+      >
+      <v-btn
+        class="mx-4"
+        :icon="icons[idx]"
+        variant="plain"
+        :size="60"
+      >
+      </v-btn>
+      </a>
+    </div>
+
   </v-footer>
 </template>
 
 <script>
-export default {
-  props: {
-    fixed: {
-      type: Boolean,
-      default: true,
-    },
-    user: {
-      type: Object,
-      default: null,
-    },
+  export default {
+    props: {
+      fixed: {
+        type: Boolean,
+        default: true,
+      },
+      user: {
+        type: Object,
+        default: null,
+      },
   },
-  data: () => ({
-    apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
-    nodeEnv: import.meta.env.VITE_NODE_ENV,
-  }),
-}
+    data: () => ({
+      year: new Date().getFullYear(),
+      icons: [
+        'mdi-github',
+        'mdi-twitter',
+        'mdi-linkedin',
+        'mdi-instagram',
+      ],
+      links: [
+        'https://github.com/ElielClementino',
+        'https://twitter.com/',
+        'https://www.linkedin.com/in/eliel-clementino-3070b0224/',
+        'https://instagram.com/'
+      ]
+    })
+  }
 </script>
+
+<style scoped>
+a {
+  text-decoration:none;
+  font-weight: bolder;
+  font-size:2rem;
+}
+</style>
