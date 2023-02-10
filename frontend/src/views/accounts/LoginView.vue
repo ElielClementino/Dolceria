@@ -6,8 +6,8 @@
         <v-form>
           <v-text-field
             v-model="username"
-            label="E-Mail"
-            prepend-inner-icon="mdi-email-fast-outline"
+            label="Nome de usuário"
+            prepend-inner-icon="mdi-account"
             variant="outlined"
             required
             @keyup.enter="login"></v-text-field>
@@ -106,7 +106,7 @@ export default {
       }
     },
     showTasks() {
-      this.$router.push({ name: "tasks-list" })
+      this.$router.push({ name: "products-list" })
       console.log("--> tasks")
     },
   },
