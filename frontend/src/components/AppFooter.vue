@@ -13,7 +13,6 @@
       <v-btn
         class="mx-4"
         :icon="icons[idx]"
-        variant="plain"
         :size="60"
       >
       </v-btn>
