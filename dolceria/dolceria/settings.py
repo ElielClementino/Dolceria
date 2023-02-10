@@ -56,7 +56,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "dolceria.base",
     "dolceria.accounts",
-    "dolceria.tasks",
+    "dolceria.products",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
