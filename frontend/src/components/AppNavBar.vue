@@ -2,7 +2,9 @@
   <v-app-bar>
     <v-app-bar-title>{{ title }}</v-app-bar-title>
     <template #append>
-      <v-btn v-if="loggedUser" icon="mdi-cart" :to="{ name: 'base-home' }">
+      <v-btn v-if="loggedUser" :to="{ name: 'cart-products' }">
+        <v-icon>mdi-cart</v-icon>
+        {{ productQuantity }}
       </v-btn>
       <v-btn
         :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
@@ -11,10 +13,12 @@
         <v-icon icon="mdi-dots-vertical" />
         <v-menu activator="parent">
           <v-list>
-            <v-list-item v-if="loggedUser" :to="{ name: 'new-product' }"> Adicionar Produto </v-list-item>
-            <v-list-item v-if="loggedUser" :to="{ name: 'accounts-logout' }"> Deslogar </v-list-item>
-            <v-list-item v-if="canAddProduct()" :to="{ name: 'accounts-login' }"> Login </v-list-item>
             <v-list-item :to="{ name: 'base-home' }"> Página inicial </v-list-item>
+            <v-list-item :to="{ name: 'products-list' }"> Lista de Produtos </v-list-item>
+            <v-list-item v-if="canAddProduct()" :to="{ name: 'new-product' }"> Adicionar Produto </v-list-item>
+            <v-list-item v-if="!loggedUser" :to="{ name: 'accounts-login' }"> Login </v-list-item>
+            <v-list-item v-if="!loggedUser" :to="{ name: 'accounts-register' }"> Cadastrar-se </v-list-item>
+            <v-list-item v-if="loggedUser" :to="{ name: 'accounts-logout' }"> Deslogar </v-list-item>
           </v-list>
         </v-menu>
       </v-btn>
@@ -57,7 +61,7 @@ export default {
   },
     computed: {
     ...mapState(useAccountsStore, ["loggedUser"]),
-    ...mapState(useProductStore, ["productStore"])
-  },
+    ...mapState(useProductStore, ["productQuantity"])
+  }
 }
 </script>
