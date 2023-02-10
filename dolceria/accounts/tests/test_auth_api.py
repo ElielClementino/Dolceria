@@ -1,6 +1,7 @@
 from dolceria.accounts.models import User
-
+from model_bakery import baker
 from . import fixtures
+import json
 
 
 def test_deve_retornar_usuario_nao_logado(client):
@@ -68,3 +69,39 @@ def test_deve_fazer_login(client, db):
 def test_deve_fazer_logout_mesmo_sem_login(client, db):
     resp = client.post("/api/accounts/logout")
     assert resp.status_code == 200
+
+
+def test_not_registering_if_equal_username(client, db):
+    baker.make(User, username="Eliel", password="Eliel")
+
+    new_user = {"userInfo": { "username": "Eliel", "email":"eliel@eliel", "password": "Eliel"}}
+
+    response = client.post("/api/accounts/register", new_user, content_type="application/json")
+    data = json.loads(response.content.decode())
+
+
+    assert response.status_code == 200
+    assert data == {'erro': 'nome de usuário já está sendo usado'}
+
+
+def test_not_registering_if_equal_email(client, db):
+    baker.make(User, username="Eliel", password="Eliel", email="eliel@eliel")
+
+    new_user = {"userInfo": { "username": "Liel", "email":"eliel@eliel", "password": "Eliel"}}
+
+    response = client.post("/api/accounts/register", new_user, content_type="application/json")
+    data = json.loads(response.content.decode())
+
+
+    assert response.status_code == 200
+    assert data == {'erro': 'email já está sendo usado'}
+
+
+def test_user_registering_is_working(client, db):
+    new_user = {"userInfo": { "username": "Liel", "email":"eliel@eliel", "password": "Eliel"}}
+
+    response = client.post("/api/accounts/register", new_user, content_type="application/json")
+    data = json.loads(response.content.decode())
+
+    assert response.status_code == 200
+    assert data == {'sucesso': f'usuário { new_user["userInfo"]["username"] }, sua conta foi criada com sucesso '}
