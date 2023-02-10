@@ -1,9 +1,12 @@
 # coding: utf-8
 from django.contrib import auth
+import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
 
-from ..tasks.service import log_svc
+from .service import accounts_svc
+from ..products.service import log_svc
 
 
 @csrf_exempt
@@ -18,6 +21,12 @@ def login(request):
             log_svc.log_login(request.user)
             user_dict = _user2dict(user)
     return JsonResponse(user_dict, safe=False)
+
+
+@require_POST
+def register(request):
+    account = accounts_svc.register(json.loads(request.body.decode()))
+    return account
 
 
 def logout(request):
