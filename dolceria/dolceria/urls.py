@@ -21,5 +21,5 @@ urlpatterns = [
     # path('explorer/', include('explorer.urls')),
     path("api/", include("dolceria.base.urls")),
     path("api/accounts/", include("dolceria.accounts.urls")),
-    path("api/tasks/", include("dolceria.tasks.urls")),
+    path("api/products/", include("dolceria.products.urls")),
 ]
