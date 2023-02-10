@@ -3,7 +3,7 @@
     <v-row align="start" no-gutters style="height: 150px">
       <v-col cols="12">
         <v-card class="text-center">
-          <v-card-title class="headline"> Bye Bye </v-card-title>
+          <v-card-title class="headline"> Obrigado por nos visitar <v-icon>mdi-cupcake</v-icon> </v-card-title>
           <v-card-text>
             <h2>Finalizar sessão?</h2>
             <p class="ma-4">
