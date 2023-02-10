@@ -26,6 +26,18 @@ export default {
         })
     })
   },
+  register: (userInfo) => {
+    return new Promise((resolve, reject) => {
+      api
+        .post("/api/accounts/register", { userInfo })
+        .then((response) => {
+          return resolve(response.data)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
+  },
   logout: () => {
     return new Promise((resolve, reject) => {
       api
