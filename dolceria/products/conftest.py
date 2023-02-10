@@ -1,6 +1,6 @@
 import pytest
 
-from dolceria.tasks.models import User
+from dolceria.products.models import User
 
 
 @pytest.fixture

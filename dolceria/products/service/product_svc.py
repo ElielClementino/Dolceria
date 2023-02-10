@@ -1,4 +1,4 @@
-from dolceria.tasks.models import Product
+from dolceria.products.models import Product
 
 
 def add_product(product):
@@ -24,3 +24,16 @@ def add_product(product):
 def list_products():
     products = Product.objects.values()
     return [product for product in products]
+
+
+def filter_products(filtered_data):
+    products  = []
+    for product in filtered_data:
+        products.append(Product.objects.values().get(id=product["id"]))
+
+    return products
+
+
+
+def buy_products(products):
+    pass

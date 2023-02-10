@@ -13,7 +13,7 @@ def test_add_product_without_being_logged(client):
             "price": 55.50,
         }
     }
-    response = client.post("/api/tasks/add/product", new_product)
+    response = client.post("/api/products/add/product", new_product)
     assert response.status_code == 401
 
 
@@ -39,7 +39,7 @@ def test_if_product_is_being_created(user, client, db):
     }
 
     request = client.post(
-        "/api/tasks/add/product", new_product, content_type="application/json"
+        "/api/products/add/product", new_product, content_type="application/json"
     )
     response = request.json()
 
@@ -63,8 +63,46 @@ def test_list_all_products(user, client, db):
         price=55.50,
         _quantity=4,
     )
-    request = client.get("/api/tasks/list/products")
+    request = client.get("/api/products/list/products")
     response = request.json()
 
     assert request.status_code == 200
     assert len(response["products"]) == 4
+
+
+def test_filter_products(user, client, db):
+    client.force_login(user)
+    baker.make(
+        "Product",
+        pk=1,
+        name="Red Velvet",
+        image_url="https://url.py",
+        description="O Bolo Red Velvet é um bolo de textura muito leve e macia, levemente amanteigado e com um discreto sabor a chocolate. A sua massa é de cor vermelha, o que contrasta com o branco do creme queijo no recheio e cobertura-.",
+        quantity=20,
+        price=55.50,
+    )
+    baker.make(
+        "Product",
+        pk=2,
+        name="Cenoura com calda de chocolate",
+        image_url="https://url.py",
+        description="O bolo de cenoura é um bolo doce com cenoura misturada dentro da massa.",
+        quantity=10,
+        price=65.50,
+    )
+    baker.make(
+        "Product",
+        pk=3,
+        name="Morango com chantilly",
+        image_url="https://url.py",
+        description="A massa do bolo leva claras em neves, por isso fica bem leve e fofinha. Já o recheio é feito com leite condensado, creme de leite e morangos.",
+        quantity=20,
+        price=45.50,
+    )
+    chosen_products = [[{'id': 1, 'quantity': 6}], [{'id': 2, 'quantity': 3}]]
+    request = client.post("/api/products/filter/products", chosen_products, content_type="application/json")
+    response = request.json()
+
+
+    assert request.status_code == 200
+    assert len(response["products"]) == 2
