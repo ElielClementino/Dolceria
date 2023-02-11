@@ -37,10 +37,10 @@ export default {
         })
     })
   },
-  buyProducts: () => {
+  buyProducts: (products) => {
     return new Promise((resolve, reject) => {
       api
-        .delete("/api/products/buy/products")
+        .patch("/api/products/buy/products", products)
         .then((response) => {
           return resolve(response.data)
         })
