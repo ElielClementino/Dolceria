@@ -12,15 +12,6 @@ from .service import product_svc
 @require_POST
 def add_product(request):
     product = json.loads(request.body.decode())
-    # product = {
-    #     "product": {
-    #         "name": data["product"].get("name"),
-    #         "image_url": data["product"].get("image_url"),
-    #         "description": data["product"].get("description"),
-    #         "quantity": data["product"].get("quantity"),
-    #         "price": data["product"].get("price"),
-    #     }
-    # }
     new_product = product_svc.add_product(product)
     return JsonResponse(new_product)
 
@@ -41,6 +32,8 @@ def filter_products(request):
 
     return JsonResponse({"products":filtered_products})
 
-
+@ajax_login_required
 def buy_products(request):
-    pass
+    products_to_actualize = json.loads(request.body.decode())
+    actualized_products = product_svc.buy_products(products_to_actualize)
+    return JsonResponse({"actualized_products":actualized_products})
