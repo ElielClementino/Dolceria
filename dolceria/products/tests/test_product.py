@@ -1,6 +1,7 @@
 from model_bakery import baker
 
 from dolceria.accounts.tests import fixtures
+from dolceria.products.models import Product
 
 
 def test_add_product_without_being_logged(client):
@@ -106,3 +107,44 @@ def test_filter_products(user, client, db):
 
     assert request.status_code == 200
     assert len(response["products"]) == 2
+
+
+def test_actualize_products(user, client, db):
+    client.force_login(user)
+    red_velvet = baker.make(
+        "Product",
+        pk=1,
+        name="Red Velvet",
+        image_url="https://url.py",
+        description="O Bolo Red Velvet é um bolo de textura muito leve e macia, levemente amanteigado e com um discreto sabor a chocolate. A sua massa é de cor vermelha, o que contrasta com o branco do creme queijo no recheio e cobertura-.",
+        quantity=20,
+        price=55.50,
+    )
+    cenoura = baker.make(
+        "Product",
+        pk=2,
+        name="Cenoura com calda de chocolate",
+        image_url="https://url.py",
+        description="O bolo de cenoura é um bolo doce com cenoura misturada dentro da massa.",
+        quantity=10,
+        price=65.50,
+    )
+    baker.make(
+        "Product",
+        pk=3,
+        name="Morango com chantilly",
+        image_url="https://url.py",
+        description="A massa do bolo leva claras em neves, por isso fica bem leve e fofinha. Já o recheio é feito com leite condensado, creme de leite e morangos.",
+        quantity=20,
+        price=45.50,
+    )
+    chosen_products = [[{'id': 1, 'quantity': 6, "price": 131}], [{'id': 2, 'quantity': 3, "price": 131}]]
+    request = client.patch("/api/products/buy/products", chosen_products, content_type="application/json")
+
+    product_1 = Product.objects.filter(id=1)
+    product_2 = Product.objects.filter(id=2)
+
+
+    assert request.status_code == 200
+    assert product_1[0].quantity == 14
+    assert product_2[0].quantity == 7
