@@ -10,6 +10,9 @@ export const useProductStore = defineStore("productStore", {
       setProductQuantity(quantity, product) {
         this.productQuantity += quantity
         this.products.push(product)
+      },
+      clearProductQuantity() {
+        this.productQuantity = null
       }
     },
   })
