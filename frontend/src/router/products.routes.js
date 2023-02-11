@@ -3,6 +3,7 @@ import DefaultLayout from "@/layouts/default/DefaultLayout.vue"
 import ProductListView from "@/views/products/ProductListView.vue"
 import ProductCreationView from "@/views/products/ProductCreationView.vue"
 import CartListView from "@/views/products/CartListView.vue"
+import ThanksView from "@/views/base/ThanksView.vue"
 
 export default [
   {
@@ -23,6 +24,11 @@ export default [
         path: "",
         name: "cart-products",
         component: CartListView,
+      },
+      {
+        path: "",
+        name: "thanks-for-buying",
+        component: ThanksView,
       },
     ],
   },
