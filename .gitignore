@@ -8,4 +8,5 @@ htmlcov/
 /dolceria.log
 /static
 .venv
+.vscode
 /apimock/node_modules
