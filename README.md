@@ -1,4 +1,5 @@
 # Dolceria
+[Dolceria](gifProjeto.gif)
 ### Feito usando como template [huogerac/djavue](https://github.com/huogerac/djavue)
 <br />
 
