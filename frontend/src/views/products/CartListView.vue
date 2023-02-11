@@ -9,7 +9,13 @@
 
       <v-spacer></v-spacer>
       <v-toolbar-title >Total da sua compra: R$ {{ valueToPay }}</v-toolbar-title>
-    <v-btn>
+    <v-btn
+      size="large"
+      rounded="pill"
+      dense
+      append-icon="mdi-chevron-right"
+      @click="buyProducts()"
+    >
         FINALIZAR COMPRA
     </v-btn>
     </v-toolbar>
@@ -60,10 +66,8 @@ import { useProductStore } from "@/stores/productsStore"
     }),
     methods: {
       async filterProducts () {
+        if (!this.products) return
 
-        if (!this.products){
-          return
-        }
         this.filteredProducts = await apis.filterProducts(this.products)
         for (let idx=0; idx < this.products.length; idx++){
           this.valueToPay += this.products[idx][0].price
@@ -78,6 +82,10 @@ import { useProductStore } from "@/stores/productsStore"
                 { type: 'divider', inset: true },
               )
         )
+      },
+      async buyProducts () {
+        await apis.buyProducts(this.products)
+        this.$router.push({name: "thanks-for-buying"})
       }
     },
     computed: {
