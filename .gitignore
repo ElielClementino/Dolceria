@@ -7,5 +7,5 @@ htmlcov/
 .idea
 /dolceria.log
 /static
-
+.venv
 /apimock/node_modules
