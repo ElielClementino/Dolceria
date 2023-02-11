@@ -5,6 +5,7 @@ dkdata
 coverage.xml
 htmlcov/
 .idea
+.env
 /dolceria.log
 /static
 .venv
