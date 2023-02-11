@@ -35,5 +35,15 @@ def filter_products(filtered_data):
 
 
 
-def buy_products(products):
-    pass
+def buy_products(products_to_actualize):
+    products  = []
+
+    for product in products_to_actualize:
+        products.append(product)
+
+
+    for idx in range(len(products)):
+        product_to_actualize = Product.objects.filter(id=products[idx][0]["id"])
+        quantity = product_to_actualize[0].quantity - products[idx][0]["quantity"]
+        Product.objects.filter(id=products[idx][0]["id"]).update(quantity=quantity)
+    return products
