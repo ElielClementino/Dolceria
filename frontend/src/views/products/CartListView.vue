@@ -14,6 +14,7 @@
       rounded="pill"
       dense
       append-icon="mdi-chevron-right"
+      :disabled="valueToPay <= 0"
       @click="buyProducts()"
     >
         FINALIZAR COMPRA
@@ -40,28 +41,15 @@ import apis from "@/api/apis.js"
 import { useProductStore } from "@/stores/productsStore"
 
   export default {
+    setup() {
+      const productStore = useProductStore()
+      return { productStore }
+    },
     data: () => ({
       filteredProducts: [],
       valueToPay: 0,
       items: [
         { type: 'subheader', title: 'Produtos' },
-        {
-          prependAvatar:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHgzVLj9HXP1PD5NVNx5D4mZMpJKrGRUXcrQ&usqp=CAU',
-          title: 'Morango com chantilly',
-          subtitle: 'Você adicionou 30 unidades do bolo de morango que custam 65.55 cada.',
-        },
-        { type: 'divider', inset: true },
-        {
-          prependAvatar: 'https://img.cybercook.com.br/receitas/975/bolo-de-cenoura-31.jpeg',
-          title: 'Cenoura com calda de chocolate',
-          subtitle: 'Você adicionou 20 unidades do bolo de cenoura que custam 55.55 cada.',
-        },
-        { type: 'divider', inset: true },
-        {
-          prependAvatar: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnHWSpUbf87DTkCX2BBELNAyypVYaj-8BSh7o67I56qg&s',
-          title: 'Red Velvet',
-          subtitle: 'Você adicionou 10 unidades do bolo red velvet que custam 75.55 cada.',
-        }
       ],
     }),
     methods: {
@@ -72,12 +60,12 @@ import { useProductStore } from "@/stores/productsStore"
         for (let idx=0; idx < this.products.length; idx++){
           this.valueToPay += this.products[idx][0].price
         }
-        this.filteredProducts.products.map(item => 
+        this.filteredProducts.products.map((item, idx) => 
           this.items.push(
                 {
                   prependAvatar:item["image_url"],
                   title: item["name"],
-                  subtitle: `Você adicionou ${this.products.quantity} unidades do bolo de morango que custam ${item["price"]} cada.`,
+                  subtitle: `Você adicionou ${this.products[idx][0].quantity} unidades do bolo de morango que custam ${item["price"]} cada.`,
                 },
                 { type: 'divider', inset: true },
               )
@@ -85,6 +73,7 @@ import { useProductStore } from "@/stores/productsStore"
       },
       async buyProducts () {
         await apis.buyProducts(this.products)
+        this.productStore.clearProductQuantity()
         this.$router.push({name: "thanks-for-buying"})
       }
     },
