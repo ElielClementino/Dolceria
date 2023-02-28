@@ -1,0 +1,46 @@
+[
+{
+   "model": "products.product",
+   "pk": 1,
+   "fields": {
+      "name": "Red Velvet",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSnHWSpUbf87DTkCX2BBELNAyypVYaj-8BSh7o67I56qg&s",
+      "description": "O Bolo Red Velvet é um bolo de textura muito leve e macia, levemente amanteigado e com um discreto sabor a chocolate. A sua massa é de cor vermelha, o que contrasta com o branco do creme queijo no recheio e cobertura.",
+      "quantity": 14,
+      "price": 65.5
+   }
+},
+{
+   "model": "products.product",
+   "pk": 2,
+   "fields": {
+      "name": "Cenoura com calda de chocolate",
+      "image_url": "https://img.cybercook.com.br/receitas/975/bolo-de-cenoura-31.jpeg",
+      "description": "O bolo de cenoura é um bolo doce com cenoura misturada dentro da massa. ",
+      "quantity": 10,
+      "price": 45.5
+   }
+},
+{
+   "model": "products.product",
+   "pk": 3,
+   "fields": {
+      "name": "Morango com chantilly",
+      "image_url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHgzVLj9HXP1PD5NVNx5D4mZMpJKrGRUXcrQ&usqp=CAU",
+      "description": "A massa do bolo leva claras em neves, por isso fica bem leve e fofinha. Já o recheio é feito com leite condensado, creme de leite e morangos.",
+      "quantity": 16,
+      "price": 65.5
+   }
+},
+{
+   "model": "products.product",
+   "pk": 6,
+   "fields": {
+      "name": "Torta de abacaxi",
+      "image_url": "https://cidadeolimpica.com.br/wp-content/uploads/2022/05/torta-de-abacaxi.jpg",
+      "description": "Um dos nossos produtos mais pedidos, com uma massa extremamente macia e airada, e na sua cobertura temos um caramelo e rodelas de abacaxi que dão todo um charme e um sabor super agradável.",
+      "quantity": 10,
+      "price": 75.5
+   }
+}
+]
