@@ -17,3 +17,26 @@ docker compose build
 docker compose up
 
 para acessar o site basta colocar na url http://localhost/
+
+## Ajudinha
+-- Caso esteja com os containers do nginx/frontend/postgres rodando e o django fora do container, com python manage.py runserver --  
+
+Para poder facilitar o setup do projeto usando o banco adicionei no root do projeto o arquivo "dump.json"  
+
+Ele tem alguns produtos cadastrados, basta rodar no terminal o seguinte comando para jogar esses arquivos no seu banco de dados.  
+
+    python manage.py loaddata dump.json  
+
+
+-- Caso esteja rodando todos os ambientes com docker(nginx/frontend/backend/postgres)--
+
+Você irá precisar acessar o container do backend
+rodando o comando docker ps, você vai ter os ids dos containers que estão rodando, basta pegar o id do container do backend e rodar o seguinte comando no terminal:
+
+    docker exec -it IDDOCONTAINER bash  
+
+Assim que você entrar no container basta rodar o comando:
+
+    python manage.py loaddata dump.json  
+
+
