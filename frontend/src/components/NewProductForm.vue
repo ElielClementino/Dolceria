@@ -82,7 +82,6 @@ import apis from "@/api/apis.js"
                     "quantity": this.quantity,
                     "price": this.price,
             }
-            console.log(this.produto)
             apis.addNewProduct(this.produto)
         }
     }

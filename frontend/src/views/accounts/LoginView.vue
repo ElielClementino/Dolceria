@@ -72,12 +72,11 @@ export default {
     ...mapState(useAccountsStore, ["loggedUser"]),
   },
   mounted() {
-    console.log(this.loggedUser)
     AccountsApi.whoami().then((response) => {
       if (response.authenticated) {
         this.saveLoggedUser(response.user)
         this.appStore.showSnackbar("Usuário já logado", "warning")
-        this.showTasks()
+        this.showProducts()
       }
     })
   },
@@ -91,7 +90,7 @@ export default {
             return
           }
           this.saveLoggedUser(response.user)
-          this.showTasks()
+          this.showProducts()
         })
         .finally(() => {
           this.loading = false
@@ -102,12 +101,10 @@ export default {
       if (user) {
         this.accountsStore.setLoggedUser(user)
         this.visible = false
-        console.log("logged")
       }
     },
-    showTasks() {
-      this.$router.push({ name: "products-list" })
-      console.log("--> tasks")
+    showProducts() {
+        this.$router.push({ name: "products-list" })
     },
   },
 }

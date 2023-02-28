@@ -81,6 +81,6 @@ import { useAccountsStore } from "@/stores/accountsStore"
 export default {
   computed: {
     ...mapState(useAccountsStore, ["loggedUser"]),
-  },
+  }
 }
 </script>

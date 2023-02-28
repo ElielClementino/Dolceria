@@ -25,9 +25,10 @@ import Products from "@/components/Products.vue"
 import InfoDialog from "@/components/InfoDialog.vue"
 import { mapState } from "pinia"
 import { useAccountsStore } from "@/stores/accountsStore"
+import AccountsApi from "@/api/accounts.api.js"
 
 export default {
-  name: "TasksList",
+  name: "ProductsList",
   components: {
     Products,
     InfoDialog
@@ -35,7 +36,9 @@ export default {
   setup() {
 
     const appStore = useAppStore()
-    return { appStore }
+    const accountsStore = useAccountsStore()
+
+    return { appStore, accountsStore }
   },
   data() {
     return {
@@ -43,11 +46,21 @@ export default {
       items: [],
       showDialog: false,
       products: [],
+      authenticated: false,
     }
   },
   mounted() {
     this.listProducts()
-    this.showPopup()
+    AccountsApi.whoami().then((response) =>{
+      this.authenticated = response.authenticated
+      if (!this.authenticated){
+        this.showPopup()
+      }
+      else {
+        this.accountsStore.setLoggedUser(response.user)
+        
+      }
+    })
   },
   computed: {
     ...mapState(useAccountsStore, ["loggedUser"]),
@@ -55,7 +68,7 @@ export default {
   methods: {
     showPopup() {
       this.showDialog = false
-      if (!this.loggedUser) {
+      if (!this.authenticated) {
         this.showDialog = true
       }
       return this.showDialog
