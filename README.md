@@ -37,4 +37,10 @@ Assim que você entrar no container basta rodar o comando:
 
     python manage.py loaddata dump.json  
 
+## Criando conta de administrador
 
+Você irá ter que acessar o container do backend da mesma forma descrita acima e rodar o seguinte comando:  
+
+    python manage.py createsuperuser  
+
+ após criar o usuário basta fazer login utilizando a senha e o login que foi definido na criação do super user
