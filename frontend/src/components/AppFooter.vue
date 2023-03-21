@@ -5,17 +5,17 @@
 
       <v-spacer/>
       <a 
-      v-for="link, idx in links"
-      :key="idx"
-      :href="link"
-      target="_blank"
-      >
-      <v-btn
-        class="mx-4"
-        :icon="icons[idx]"
-        :size="60"
-      >
-      </v-btn>
+        v-for="link, idx in links"
+        :key="idx"
+        :href="link"
+        target="_blank"
+        >
+        <v-btn
+          variant="plain"
+          color="white"
+          :icon="icons[idx]"
+        >
+        </v-btn>
       </a>
     </div>
 
