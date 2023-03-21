@@ -28,6 +28,7 @@
       item-props
       lines="three"
     >
+
       <template v-slot:subtitle="{ subtitle }">
         <div v-html="subtitle"></div>
       </template>
@@ -68,7 +69,7 @@ import { useProductStore } from "@/stores/productsStore"
                   prependAvatar:item["image_url"],
                   title: item["name"],
                   subtitle: `Quantidade: ${this.products[idx][0].quantity} <br>
-                  Valor ${item["price"]} cada.`,
+                  Valor: ${item["price"]} cada`,
                 },
                 { type: 'divider', inset: true },
               )

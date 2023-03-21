@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row align="start" no-gutters style="height: 150px">
-      <v-col cols="12">
+    <v-row no-gutters style="height: 150px">
+      <v-col cols="4" offset="4">
         <v-card class="text-center">
           <v-card-title class="headline"> Obrigado por nos visitar <v-icon>mdi-cupcake</v-icon> </v-card-title>
           <v-card-text>
@@ -15,8 +15,8 @@
                 block
                 color="primary"
                 variant="outlined"
-                :to="{ name: 'base-home' }">
-                Início
+                :to="{ name: 'products-list' }">
+                Produtos
               </v-btn>
             </p>
           </v-card-text>
