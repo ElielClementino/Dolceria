@@ -1,30 +1,46 @@
 <template>
   <v-card
     class="mx-auto"
-    max-width="344"
   >
     <v-img
       :src="product.image_url"
       height="200px"
-    ></v-img>
-    <v-card-title>
-      {{ product.name }}
-    </v-card-title>
+    /> 
+    <div class="d-flex mt-4">
+      <v-card-title>
+        {{ product.name }}
+      </v-card-title>
 
-    <v-card-subtitle style="font-size:18px">
-      Valor: {{ product.price }}
-    </v-card-subtitle>
+      <template v-if="canAddProduct()">
+        <v-btn variant="plain" icon="mdi-dots-vertical">
+          <v-icon icon="mdi-dots-vertical" />
+          <v-menu activator="parent">
+            <v-list>
+              <v-list-item @click="excluirProduto(product.id)">  Excluir Produto </v-list-item>
+            </v-list>
+          </v-menu>
+        </v-btn>
+      </template>
+   </div>
 
+  <div class="d-flex">
     <v-card-subtitle style="font-size:18px">
       Quantidade disponível: {{ product.quantity }}
     </v-card-subtitle>
+    <v-spacer></v-spacer>
+    <v-card-subtitle style="font-size:18px">
+      <v-icon> mdi-currency-usd</v-icon>
+        {{ product.price }}
+    </v-card-subtitle>
+  </div>
+
     <v-card-actions>
       <v-btn
         color="orange lighten-2"
         text
         @click="show = !show"
       >
-        Descrição
+        Saiba mais
       </v-btn>
 
       <v-spacer></v-spacer>
@@ -113,7 +129,15 @@ export default {
       this.selectedProducts.push({id:productId, quantity: this.quantity, price: this.price})
       this.quantity = 0
       this.productStore.setProductQuantity(this.selectedProducts.length, this.selectedProducts)
-    }
-  }
+    },
+    canAddProduct() {
+      if(this.loggedUser){
+        return this.loggedUser.permissions.ADMIN
+      }
+    },
+    excluirProduto(productId) {
+      this.$emit("excluirProduto", productId);
+    },
+  },
 }
 </script>

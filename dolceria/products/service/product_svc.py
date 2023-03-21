@@ -47,3 +47,9 @@ def buy_products(products_to_actualize):
         quantity = product_to_actualize[0].quantity - products[idx][0]["quantity"]
         Product.objects.filter(id=products[idx][0]["id"]).update(quantity=quantity)
     return products
+
+def excluir_produto(id):
+    produto = Product.objects.get(id=id)
+    produto.delete()
+    return 
+

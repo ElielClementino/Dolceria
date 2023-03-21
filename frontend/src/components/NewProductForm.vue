@@ -83,6 +83,7 @@ import apis from "@/api/apis.js"
                     "price": this.price,
             }
             apis.addNewProduct(this.produto)
+            this.$router.push({ name: "products-list" })
         }
     }
   }

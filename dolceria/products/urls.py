@@ -7,4 +7,5 @@ urlpatterns = [
     path("list/products", views.list_products),
     path("filter/products", views.filter_products),
     path("buy/products", views.buy_products),
+    path("excluir/product/<int:id>", views.excluir_produto),
 ]
