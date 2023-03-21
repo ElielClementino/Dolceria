@@ -48,5 +48,18 @@ export default {
           return reject(error)
         })
     })
+  },
+  excluirProduto: (productId) => {
+    console.log('chegiy aqi')
+    return new Promise((resolve, reject) => {
+      api
+        .delete(`/api/products/excluir/product/${productId}`)
+        .then((response) => {
+          return resolve(response.data)
+        })
+        .catch((error) => {
+          return reject(error)
+        })
+    })
   }
 }

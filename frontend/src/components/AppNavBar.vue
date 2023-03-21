@@ -2,26 +2,23 @@
   <v-app-bar>
     <v-app-bar-title>{{ title }}</v-app-bar-title>
     <template #append>
-      <v-btn v-if="loggedUser" :to="{ name: 'cart-products' }">
-        <v-icon>mdi-cart</v-icon>
-        {{ productQuantity }}
-      </v-btn>
-      <v-btn
-        :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
-        @click.stop="themeClick"></v-btn>
-      <v-btn icon="mdi-dots-vertical">
-        <v-icon icon="mdi-dots-vertical" />
-        <v-menu activator="parent">
-          <v-list>
+           <v-list class="d-flex" activator="parent">
             <v-list-item :to="{ name: 'base-home' }"> Página inicial </v-list-item>
-            <v-list-item :to="{ name: 'products-list' }"> Lista de Produtos </v-list-item>
+            <v-list-item class="mr-2" :to="{ name: 'products-list' }"> Lista de Produtos </v-list-item>
+            <v-list-item v-if="loggedUser" :to="{ name: 'cart-products' }">
+              <v-icon>mdi-cart</v-icon>
+                {{ productQuantity }}
+            </v-list-item>
             <v-list-item v-if="canAddProduct()" :to="{ name: 'new-product' }"> Adicionar Produto </v-list-item>
             <v-list-item v-if="!loggedUser" :to="{ name: 'accounts-login' }"> Login </v-list-item>
             <v-list-item v-if="!loggedUser" :to="{ name: 'accounts-register' }"> Cadastrar-se </v-list-item>
             <v-list-item v-if="loggedUser" :to="{ name: 'accounts-logout' }"> Deslogar </v-list-item>
           </v-list>
-        </v-menu>
-      </v-btn>
+
+          <v-btn
+            :prepend-icon="theme === 'light' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
+            @click.stop="themeClick">
+          </v-btn>
     </template>
   </v-app-bar>
 </template>
@@ -47,7 +44,9 @@ export default {
   },
   emits: ["themeClick"],
   data: () => {
-    return {}
+    return {
+      disabled: false
+    }
   },
   methods: {
     themeClick() {

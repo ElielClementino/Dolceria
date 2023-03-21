@@ -1,7 +1,7 @@
 # coding: utf-8
 import json
 
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from ..commons.django_views_utils import ajax_login_required
 from django.views.decorators.http import require_POST
 
@@ -37,3 +37,7 @@ def buy_products(request):
     products_to_actualize = json.loads(request.body.decode())
     actualized_products = product_svc.buy_products(products_to_actualize)
     return JsonResponse({"actualized_products":actualized_products})
+
+def excluir_produto(request, id):
+    product_svc.excluir_produto(id)
+    return HttpResponse(status=204)

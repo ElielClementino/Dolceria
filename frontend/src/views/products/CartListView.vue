@@ -4,21 +4,23 @@
     class="mx-auto"
   >
     <v-toolbar color="purple">
-
-      <v-toolbar-title>Produtos adicionados no carrinho</v-toolbar-title>
-
-      <v-spacer></v-spacer>
       <v-toolbar-title >Total da sua compra: R$ {{ valueToPay }}</v-toolbar-title>
-    <v-btn
-      size="large"
-      rounded="pill"
-      dense
-      append-icon="mdi-chevron-right"
-      :disabled="valueToPay <= 0"
-      @click="buyProducts()"
-    >
-        FINALIZAR COMPRA
-    </v-btn>
+      <v-spacer></v-spacer>
+
+      <v-btn
+        @click="limparCarrinho"
+        :disabled="valueToPay <= 0">
+        <v-icon class="mr-2">mdi-cart-arrow-down</v-icon>
+          Limpar Carrinho
+      </v-btn>
+
+      <v-btn
+        :disabled="valueToPay <= 0"
+        @click="buyProducts()"
+      >
+        <v-icon class="mr-2">mdi-cart-check</v-icon>
+          Finalizar Compra
+      </v-btn>
     </v-toolbar>
 
     <v-list
@@ -26,6 +28,7 @@
       item-props
       lines="three"
     >
+
       <template v-slot:subtitle="{ subtitle }">
         <div v-html="subtitle"></div>
       </template>
@@ -65,7 +68,8 @@ import { useProductStore } from "@/stores/productsStore"
                 {
                   prependAvatar:item["image_url"],
                   title: item["name"],
-                  subtitle: `Você adicionou ${this.products[idx][0].quantity} unidades do bolo de morango que custam ${item["price"]} cada.`,
+                  subtitle: `Quantidade: ${this.products[idx][0].quantity} <br>
+                  Valor: ${item["price"]} cada`,
                 },
                 { type: 'divider', inset: true },
               )
@@ -75,6 +79,15 @@ import { useProductStore } from "@/stores/productsStore"
         await apis.buyProducts(this.products)
         this.productStore.clearProductQuantity()
         this.$router.push({name: "thanks-for-buying"})
+      },
+
+      limparCarrinho (){
+        this.products = []
+        this.items = [
+        { type: 'subheader', title: 'Produtos' },
+        ]
+        this.valueToPay = 0
+        this.productStore.clearProductQuantity()
       }
     },
     computed: {

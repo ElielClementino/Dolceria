@@ -4,15 +4,20 @@
     :show="showDialog"
     @close="closeDialog"
     />
-    <v-row justify="center" align="center">
-      <v-col cols="12">
-        <v-card>
-          <v-card-title class="headline"> Todos os nossos produtos </v-card-title>
-        </v-card>
-      </v-col>
-    <v-divider/>
-      <v-col class="mt-6" v-for="product in products" :key="product.id" cols="4">
-        <products :product="product" />
+
+      <v-text-field
+        v-model="pesquisa"
+        placeholder="Pesquise um produto"
+        :loading="loading"
+      > 
+      </v-text-field>
+
+    <v-row class="mt-2">
+      <v-col v-for="product in productsFilter" :key="product.id">
+        <products 
+          :product="product" 
+          @excluirProduto="excluirProduto"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -47,6 +52,7 @@ export default {
       showDialog: false,
       products: [],
       authenticated: false,
+      pesquisa: "",
     }
   },
   mounted() {
@@ -64,6 +70,11 @@ export default {
   },
   computed: {
     ...mapState(useAccountsStore, ["loggedUser"]),
+      productsFilter() {
+        return this.products.filter((e) => {
+          return e.name.toLowerCase().includes(this.pesquisa.toLowerCase());
+        });
+      },
   },
   methods: {
     showPopup() {
@@ -83,13 +94,15 @@ export default {
         this.products = data.products
         this.loading = false
       })
+    },
+    excluirProduto(productId){
+      console.log(' bateu')
+      apis.excluirProduto(productId).then((data) =>{
+        this.listProducts()
+      })
     }
   },
 }
 </script>
 
-<style scoped>
-.done {
-  text-decoration: line-through;
-}
-</style>
+<style scoped></style>
